@@ -169,8 +169,9 @@ if __name__ == "__main__":
         attn_implementation = args.attn_implementation
     )
 
-    if torch.cuda.get_device_properties(torch.cuda.current_device()).major >= 8:
-        torch.set_float32_matmul_precision("high")
+    if torch.cuda.is_available():
+        if torch.cuda.get_device_properties(torch.cuda.current_device()).major >= 8:
+            torch.set_float32_matmul_precision("high")
 
     if args.load_in_4bit:
         extra_params['load_in_4bit'] = True
